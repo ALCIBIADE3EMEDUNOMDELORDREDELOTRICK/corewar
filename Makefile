@@ -10,6 +10,7 @@ SRC =	src/main.c				\
 		src/flags/check_flag.c	\
 		src/flags/prog_nb.c	\
 		src/flags/help.c		\
+		src/flags/nbr_cycles.c		\
 		src/initialisation/init.c	\
 		src/file_management/get_file.c	\
 		src/champion/create_champion.c	\

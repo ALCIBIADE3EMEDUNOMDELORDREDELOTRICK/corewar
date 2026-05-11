@@ -10,6 +10,7 @@
 const flag_t flag[] = {
     {"-h", print_help},
     {"-n", prog_nb},
+    {"-dump", nbr_cycle},
     {NULL, NULL}
 };
 

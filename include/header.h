@@ -27,6 +27,7 @@ typedef struct robot {
     int *reg;
     char *name;
     int id;
+    int adress;
     nodes_t *list;
 } robot_t;
 
@@ -39,6 +40,7 @@ typedef struct arena {
 typedef struct corewar {
     nodes_t *robot;
     arena_t *arena;
+    int cycle;
 } corewar_t;
 
 typedef int (*fct_t)(corewar_t *core, int ac, char **av, int *index);
@@ -51,6 +53,7 @@ char *get_file(const char *filename);
 robot_t *create_champion(corewar_t *core, char *filename, int id);
 int prog_nb(corewar_t *core, int ac, char **av, int *index);
 int print_help(corewar_t *core, int ac, char **av, int *index);
+int nbr_cycle(corewar_t *core, int ac, char **av, int *index);
 int init(corewar_t **war, char **av);
 int check_flag(corewar_t *core, int ac, char **av);
 int parsing(robot_t *robot, char *av);
