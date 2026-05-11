@@ -20,7 +20,7 @@ int print_help(int ac, char **av)
     write(1, "By default, the first free number in the parameter order", 56);
     write(1, "-a load_address sets the next program's loading address. ", 57);
     write(1, "When no address is specified, optimize the ", 43);
-    write(1, "addresses so that the processes are as far away from ", 44);
-    write(1, "each other as possible. The addresses are MEM_SIZE modulo.", 59);
+    write(1, "addresses so that the processes are as far away from e", 45);
+    write(1, "ach other as possible. The addresses are MEM_SIZE modulo.\n", 59);
     return 0;
 }

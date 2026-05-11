@@ -47,6 +47,8 @@ typedef struct corewar {
     arena_t *arena;
 } corewar_t;
 
+char *get_file(const char *filename);
+robot_t *create_champion(corewar_t *core, char *filename, int id);
 int print_help(int ac, char **av);
 int init(corewar_t **war, char **av);
 int check_flag(int ac, char **av);

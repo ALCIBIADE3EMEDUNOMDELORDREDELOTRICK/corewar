@@ -10,6 +10,8 @@ SRC =	src/main.c				\
 		src/flags/check_flag.c	\
 		src/flags/help.c		\
 		src/initialisation/init.c	\
+		src/file_management/get_file.c	\
+		src/champion/create_champion.c	\
 		src/parsing.c				\
 
 OBJ = 	$(SRC:.c=.o)
