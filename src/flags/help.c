@@ -7,8 +7,9 @@
 
 #include "../../include/header.h"
 
-int print_help(int ac, char **av)
+int print_help(corewar_t *core, int ac, char **av, int index)
 {
+    (void)core;
     if (ac > 2)
         return -1;
     write(1, "USAGE\n./corewar [-dump nbr_cycle] ", 34);
