@@ -48,6 +48,8 @@ char **get_buffer(char *path, char *sep);
 
 char **get_virtual(char *file_path);
 
+int my_printf(const char *format, ...);
+
 int my_str_isnum(char const *str);
 
 int my_getnbr(char const *str);

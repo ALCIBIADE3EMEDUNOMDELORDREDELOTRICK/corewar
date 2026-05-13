@@ -12,6 +12,7 @@
     #define IDX_MOD 512
     #define MAX_ARGS_NUMBER 4
 
+    #define CHAMP_MAX_SIZE 682
     #define COMMENT_CHAR '#'
     #define LABEL_CHAR ':'
     #define DIRECT_CHAR '%'
