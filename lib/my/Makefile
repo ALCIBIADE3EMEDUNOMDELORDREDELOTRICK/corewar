@@ -31,12 +31,15 @@ OBJ	= $(SRC:.c=.o)
 
 NAME	= libmy.a
 
-all:	$(NAME)
+all:	do_print $(NAME)
 
 $(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
 	cp libmy.a ../
 	cp my.h ../../include/
+
+do_print:
+	make -C my_printf
 
 clean:
 	rm -f $(OBJ)
@@ -45,5 +48,6 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f ../$(NAME)
 	rm -f ../../include/my.h
+	make fclean -C my_printf
 
 re: fclean all
