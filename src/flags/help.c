@@ -9,8 +9,7 @@
 
 int print_help(corewar_t *core, int ac, char **av, int *index)
 {
-    (void)core;
-    if (ac > 2)
+    if (len_array(av) > 2)
         return -1;
     write(1, "USAGE\n./corewar [-dump nbr_cycle] ", 34);
     write(1, "[[-n prog_number] [-a load_address] prog_name] ...\n", 51);
