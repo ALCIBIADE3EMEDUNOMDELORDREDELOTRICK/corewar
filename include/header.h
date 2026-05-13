@@ -19,31 +19,36 @@
 typedef enum {
     SUCCESS_EXIT,
     ALTERNATE,
-    FAILURE = 84,
+    FAILURE = -1,
+    FAILURE_EXIT = 84
 } exit_t;
+
+typedef struct processus {
+    int pc;
+    int carry;
+    int reg[REG_NUMBER];
+    struct process_s *next;
+} processus_t;
 
 typedef struct robot {
     bool life;
-    int *reg;
     char *name;
     int id;
-    int adress;
-    nodes_t *list;
+    int size;
+    unsigned char *code;
+    int load;
+    nodes_t *processus;
 } robot_t;
-
-typedef struct arena {
-    char ***square;
-    char **memory;
-    char **instruction;
-} arena_t;
 
 typedef struct corewar {
     nodes_t *robot;
-    arena_t *arena;
+    unsigned char arena[MEM_SIZE];
+    int load;
     int cycle;
 } corewar_t;
 
 typedef int (*fct_t)(corewar_t *core, int ac, char **av, int *index);
+
 typedef struct flag_s {
     char *name;
     fct_t fct;
@@ -55,6 +60,9 @@ int prog_nb(corewar_t *core, int ac, char **av, int *index);
 int print_help(corewar_t *core, int ac, char **av, int *index);
 int nbr_cycle(corewar_t *core, int ac, char **av, int *index);
 int init(corewar_t **war, char **av);
+int init_robot(corewar_t *war, char **av);
+int get_robot(corewar_t *war, char *path, int id);
+int prog_a(corewar_t *core, int id, char **av, int *index);
 int check_flag(corewar_t *core, int ac, char **av);
 int parsing(robot_t *robot, char *av);
 #endif
