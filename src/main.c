@@ -7,19 +7,6 @@
 
 #include "../include/header.h"
 
-int free_all(corewar_t *war)
-{
-    nodes_t *next;
-
-    for (nodes_t *curr = war->robot; curr; curr = next) {
-        next = curr->next;
-        free(curr->data);
-        free(curr);
-    }
-    free(war);
-    return SUCCESS_EXIT;
-}
-
 int placement_in_arena(corewar_t *war)
 {
     int len = len_node(war->robot);
@@ -42,6 +29,7 @@ int loop(corewar_t *war)
     for (int i = 0; i != war->cycle; i++) {
         if (len_node(war->robot) <= 1)
             break;
+        war->current_cycle++;
     }
     if (war->cycle != -1)
         dump(war);
