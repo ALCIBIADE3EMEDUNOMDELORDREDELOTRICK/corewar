@@ -27,7 +27,7 @@ typedef struct processus {
     int pc;
     int carry;
     int reg[REG_NUMBER];
-    struct process_s *next;
+    struct processus *next;
 } processus_t;
 
 typedef struct robot {
@@ -37,7 +37,7 @@ typedef struct robot {
     int size;
     unsigned char *code;
     int load;
-    nodes_t *processus;
+    processus_t *processus;
 } robot_t;
 
 typedef struct corewar {
@@ -45,6 +45,8 @@ typedef struct corewar {
     unsigned char arena[MEM_SIZE];
     int load;
     int cycle;
+    int current_cycle;
+    int cycle_to_die;
 } corewar_t;
 
 typedef int (*fct_t)(corewar_t *core, int ac, char **av, int *index);
@@ -62,6 +64,8 @@ int nbr_cycle(corewar_t *core, int ac, char **av, int *index);
 int init(corewar_t **war, char **av);
 int init_robot(corewar_t *war, char **av);
 int get_robot(corewar_t *war, char *path, int id);
+int dump(corewar_t *war);
+int print_win(corewar_t *war);
 int prog_a(corewar_t *core, int id, char **av, int *index);
 int check_flag(corewar_t *core, int ac, char **av);
 int parsing(robot_t *robot, char *av);
