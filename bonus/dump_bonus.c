@@ -6,9 +6,7 @@
 */
 
 #include "../include/header.h"
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <SFML/System.h>
+#include "../bonus/bonus.h"
 
 void handle_events(sfRenderWindow *win, sfEvent event)
 {
@@ -31,16 +29,6 @@ static const sfColor *get_color(int i)
     };
 
     return &champ_color[i];
-}
-
-sfText *create_text(sfFont *font, sfColor *color)
-{
-    sfText *t = sfText_create();
-
-    sfText_setFont(t, font);
-    sfText_setCharacterSize(t, 20);
-    sfText_setFillColor(t, *color);
-    return t;
 }
 
 void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
