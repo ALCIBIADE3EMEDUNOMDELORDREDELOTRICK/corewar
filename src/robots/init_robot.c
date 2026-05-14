@@ -74,8 +74,25 @@ static int get_header(int fd, robot_t *robot)
     return SUCCESS_EXIT;
 }
 
-static int get_action(corewar_t *war, int fd, robot_t *robot)
+processus_t *create_processus(int id)
 {
+    processus_t *process = malloc(sizeof(processus_t));
+
+    if (!process)
+        return NULL;
+    process->carry = 0;
+    process->pc = 0;
+    process->next = NULL;
+    for (int i = 0; i != REG_NUMBER; i++)
+        process->reg[i] = 0;
+    process->reg[0] = id;
+    return process;
+}
+
+static int get_action(corewar_t *war, int fd, robot_t *robot, int id)
+{
+    processus_t *proc = NULL;
+
     robot->code = malloc(sizeof(unsigned char) * robot->size);
     if (!robot->code)
         return FAILURE;
@@ -85,6 +102,11 @@ static int get_action(corewar_t *war, int fd, robot_t *robot)
         robot->load = war->load;
         war->load = -1;
     }
+    proc = create_processus(id);
+    if (!proc)
+        return FAILURE;
+    proc->next = robot->processus;
+    robot->processus = proc;
     return SUCCESS_EXIT;
 }
 
@@ -105,7 +127,7 @@ void *push_robot(corewar_t *war, char *path, int id, int fd)
         free(robot);
         return NULL;
     }
-    if (get_action(war, fd, robot) != SUCCESS_EXIT) {
+    if (get_action(war, fd, robot, id) != SUCCESS_EXIT) {
         free(robot);
         return NULL;
     }
