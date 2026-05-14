@@ -80,6 +80,7 @@ processus_t *create_processus(int id)
 
     if (!process)
         return NULL;
+    process->cycle = 0;
     process->carry = 0;
     process->pc = 0;
     process->next = NULL;
@@ -94,7 +95,6 @@ static int get_action(corewar_t *war, int fd, robot_t *robot, int id)
 {
     processus_t *proc = NULL;
 
-    robot->cycle = 0;
     robot->code = malloc(sizeof(unsigned char) * robot->size);
     if (!robot->code)
         return FAILURE;
