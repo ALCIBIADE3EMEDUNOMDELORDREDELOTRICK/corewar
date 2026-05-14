@@ -14,7 +14,7 @@ void handle_events(sfRenderWindow *win, sfEvent event)
         sfRenderWindow_close(win);
 }
 
-static const sfColor *get_color(int i)
+const sfColor *get_color(int i)
 {
     static const sfColor champ_color[] = {
         {56, 152, 219, 255},
@@ -39,6 +39,7 @@ void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
         sfRenderWindow_clear(win, sfBlack);
         while (sfRenderWindow_pollEvent(win, &event))
             handle_events(win, event);
+        draw_robots(win, font, war);
         draw_cycle(win, font, war);
         sfRenderWindow_display(win);
     }

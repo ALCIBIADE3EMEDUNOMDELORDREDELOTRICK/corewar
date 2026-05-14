@@ -8,7 +8,7 @@
 #include "../include/header.h"
 #include "../bonus/bonus.h"
 
-sfText *create_text(sfFont *font, sfColor *color)
+sfText *create_text(sfFont *font, const sfColor *color)
 {
     sfText *t = sfText_create();
 

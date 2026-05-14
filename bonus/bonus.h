@@ -17,4 +17,5 @@ void draw_cycle(sfRenderWindow *win, sfFont *font, corewar_t *war);
 void draw_line(sfRenderWindow *win, float y);
 void draw_text(sfRenderWindow *win, sfText *t, char *str, float y);
 const sfColor *get_color(int i);
+void draw_robots(sfRenderWindow *win, sfFont *font, corewar_t *war);
 #endif
