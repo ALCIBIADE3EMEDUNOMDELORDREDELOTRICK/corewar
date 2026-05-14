@@ -67,6 +67,7 @@ int init(corewar_t **war, char **av);
 int init_robot(corewar_t *war, char **av);
 int get_robot(corewar_t *war, char *path, int id);
 int free_all(corewar_t *war);
+int loop(corewar_t *war);
 int dump(corewar_t *war);
 int print_win(corewar_t *war);
 int prog_a(corewar_t *core, int id, char **av, int *index);
