@@ -14,4 +14,6 @@
     #define BONUS_H
 sfText *create_text(sfFont *font, sfColor *color);
 void draw_cycle(sfRenderWindow *win, sfFont *font, corewar_t *war);
+void draw_line(sfRenderWindow *win, float y);
+void draw_text(sfRenderWindow *win, sfText *t, char *str, float y);
 #endif

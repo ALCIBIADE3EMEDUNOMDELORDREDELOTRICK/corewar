@@ -18,14 +18,14 @@ sfText *create_text(sfFont *font, sfColor *color)
     return t;
 }
 
-static void draw_text(sfRenderWindow *win, sfText *t, char *str, float y)
+void draw_text(sfRenderWindow *win, sfText *t, char *str, float y)
 {
     sfText_setString(t, str);
     sfText_setPosition(t, (sfVector2f){1420 + 10, y});
     sfRenderWindow_drawText(win, t, NULL);
 }
 
-static void draw_line(sfRenderWindow *win, float y)
+void draw_line(sfRenderWindow *win, float y)
 {
     sfVertex line[2] = {{{1420, y}, {80, 80, 80, 255}, {0, 0}},
         {{1920, y}, {80, 80, 80, 255}, {0, 0}}};
