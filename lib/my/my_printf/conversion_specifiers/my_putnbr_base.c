@@ -35,8 +35,8 @@ int my_put_nbr_base(unsigned long long n, char const *base,
     if (get_flag('#', flag) && flag->display == 'o')
         acc--;
     count_nmb(n, &count, base);
-    if (acc == -1)
-        acc = 0;
+    count = n == 0 ? 1 : count;
+    acc = acc == -1 ? 0 : acc;
     if (count > 0) {
         acc -= count;
         count = 0;
