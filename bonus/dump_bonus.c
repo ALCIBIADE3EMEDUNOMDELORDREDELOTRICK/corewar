@@ -33,12 +33,13 @@ static const sfColor *get_color(int i)
 
 void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
 {
-    sfFont *font = sfFont_createFromFile("/bonus/font.tff");
+    sfFont *font = sfFont_createFromFile("bonus/font.ttf");
 
     while (sfRenderWindow_isOpen(win)) {
         sfRenderWindow_clear(win, sfBlack);
         while (sfRenderWindow_pollEvent(win, &event))
             handle_events(win, event);
+        draw_cycle(win, font, war);
         sfRenderWindow_display(win);
     }
     sfFont_destroy(font);
