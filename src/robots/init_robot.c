@@ -86,6 +86,7 @@ processus_t *create_processus(int id)
     for (int i = 0; i != REG_NUMBER; i++)
         process->reg[i] = 0;
     process->reg[0] = id;
+    process->id = id;
     return process;
 }
 
@@ -93,6 +94,7 @@ static int get_action(corewar_t *war, int fd, robot_t *robot, int id)
 {
     processus_t *proc = NULL;
 
+    robot->cycle = 0;
     robot->code = malloc(sizeof(unsigned char) * robot->size);
     if (!robot->code)
         return FAILURE;
