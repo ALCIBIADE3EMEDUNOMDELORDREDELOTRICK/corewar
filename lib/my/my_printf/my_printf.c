@@ -137,13 +137,10 @@ static int show_that_sh(struct info_flag *flag, va_list list)
 
 static int show_flag(va_list list, const char *format, int *nb)
 {
-    struct info_flag flag;
+    struct info_flag flag = {0};
     int count = 0;
     int index = 0;
 
-    flag.flag[0] = 0;
-    flag.lenght[0] = 0;
-    flag.width = 0;
     flag.accuracy = -1;
     for (; type_of_flag(format[count], &flag, &index) == 1; count++);
     count += nb_of_width(format, count, &flag);
