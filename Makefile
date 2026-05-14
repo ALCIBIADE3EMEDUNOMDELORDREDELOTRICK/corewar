@@ -19,6 +19,24 @@ SRC =	src/main.c						\
 		src/dump/win.c					\
 		src/file_management/get_file.c	\
 		src/robots/init_robot.c			\
+		src/action/cycle_action.c		\
+		src/action/die_cycle.c			\
+		src/action/live.c				\
+		src/action/add.c				\
+		src/action/and.c				\
+		src/action/ld.c					\
+		src/action/fork.c				\
+		src/action/ldi.c				\
+		src/action/lfork.c				\
+		src/action/lld.c				\
+		src/action/lldi.c				\
+		src/action/my_xor.c				\
+		src/action/or.c					\
+		src/action/print.c				\
+		src/action/st.c					\
+		src/action/sti.c				\
+		src/action/sub.c				\
+		src/action/zjmp.c				\
 
 OBJ = 	$(SRC:.c=.o)
 
