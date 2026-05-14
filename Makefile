@@ -13,6 +13,7 @@ SRC =	src/main.c						\
 		src/flags/help.c				\
 		src/flags/nbr_cycles.c			\
 		src/initialisation/init.c		\
+		src/dump/dump.c					\
 		src/file_management/get_file.c	\
 		src/robots/init_robot.c			\
 		src/parsing.c					\
