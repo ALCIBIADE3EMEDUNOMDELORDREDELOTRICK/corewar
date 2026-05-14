@@ -12,8 +12,9 @@
 
 #ifndef BONUS_H
     #define BONUS_H
-sfText *create_text(sfFont *font, sfColor *color);
+sfText *create_text(sfFont *font, const sfColor *color);
 void draw_cycle(sfRenderWindow *win, sfFont *font, corewar_t *war);
 void draw_line(sfRenderWindow *win, float y);
 void draw_text(sfRenderWindow *win, sfText *t, char *str, float y);
+const sfColor *get_color(int i);
 #endif
