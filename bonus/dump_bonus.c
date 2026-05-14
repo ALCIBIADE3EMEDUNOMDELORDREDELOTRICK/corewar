@@ -18,12 +18,15 @@ void handle_events(sfRenderWindow *win, sfEvent event)
 
 void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
 {
+    sfFont *font = sfFont_createFromFile("/bonus/font.tff");
+
     while (sfRenderWindow_isOpen(win)) {
         sfRenderWindow_clear(win, sfBlack);
         while (sfRenderWindow_pollEvent(win, &event))
             handle_events(win, event);
         sfRenderWindow_display(win);
     }
+    sfFont_destroy(font);
 }
 
 int dump(corewar_t *war)
