@@ -6,6 +6,7 @@
 ##
 
 SRC =	src/main.c						\
+		src/free/free_all.c				\
 		src/op.c						\
 		src/flags/check_flag.c			\
 		src/flags/prog_nb.c				\
