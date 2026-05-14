@@ -11,6 +11,7 @@ SRC =	src/main.c						\
 		src/flags/check_flag.c			\
 		src/flags/prog_nb.c				\
 		src/flags/prog_a.c				\
+		src/loop/main_loop.c			\
 		src/flags/help.c				\
 		src/flags/nbr_cycles.c			\
 		src/initialisation/init.c		\
@@ -18,7 +19,6 @@ SRC =	src/main.c						\
 		src/dump/win.c					\
 		src/file_management/get_file.c	\
 		src/robots/init_robot.c			\
-		src/parsing.c					\
 
 OBJ = 	$(SRC:.c=.o)
 
