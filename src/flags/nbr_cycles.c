@@ -14,6 +14,6 @@ int nbr_cycle(corewar_t *core, int ac, char **av, int *index)
     if (cycle <= 0)
         return -1;
     core->cycle = cycle;
-    *index = *index + 1;
+    *index += 1;
     return SUCCESS_EXIT;
 }
