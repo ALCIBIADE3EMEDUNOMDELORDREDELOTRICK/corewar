@@ -31,6 +31,7 @@ SRC_BONUS =	src/main.c						\
 		src/flags/nbr_cycles.c			\
 		src/initialisation/init.c		\
 		bonus/dump_bonus.c					\
+		bonus/robot_draw.c					\
 		bonus/text.c					\
 		src/dump/win.c					\
 		src/file_management/get_file.c	\
