@@ -15,5 +15,7 @@ int init(corewar_t **war, char **av)
     (*war)->robot = NULL;
     (*war)->cycle = -1;
     (*war)->load = -1;
+    (*war)->cycle_to_die = CYCLE_TO_DIE;
+    (*war)->current_cycle = 0;
     return SUCCESS_EXIT;
 }
