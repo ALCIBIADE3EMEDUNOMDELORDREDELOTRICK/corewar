@@ -47,6 +47,11 @@ int dump_robot(corewar_t *war)
 int dump(corewar_t *war)
 {
     dump_robot(war);
+    my_printf("Memory:  ");
+    for (int i = 0; i < 32; i++)
+        my_printf(" %02X", i);
+    my_printf("\n          -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "
+        "-- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
     my_printf("%08X: ", 0);
     for (int i = 0; i < MEM_SIZE; i++) {
         my_printf("%02X ", war->arena[i]);
