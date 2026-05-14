@@ -12,6 +12,8 @@ int init(corewar_t **war, char **av)
     *war = malloc(sizeof(corewar_t));
     if (!*war)
         return FAILURE;
+    for (int i = 0; i != MEM_SIZE; i++)
+        (*war)->arena[i] = 0;
     (*war)->robot = NULL;
     (*war)->cycle = -1;
     (*war)->load = -1;
