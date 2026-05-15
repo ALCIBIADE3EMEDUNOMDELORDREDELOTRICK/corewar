@@ -7,7 +7,7 @@
 
 #include "../../include/header.h"
 
-int add(corewar_t *war, robot_t *robot, processus_t *proc)
+int add(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
 {
     return SUCCESS_EXIT;
 }

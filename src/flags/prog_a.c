@@ -7,7 +7,7 @@
 
 #include "../../include/header.h"
 
-int prog_a(corewar_t *core, int id, char **av, int *index)
+int prog_a(corewar_t *core, int *id, char **av, int *index)
 {
     int load = av[*index + 1] ? my_getnbr(av[*index + 1]) : -1;
 
@@ -17,5 +17,5 @@ int prog_a(corewar_t *core, int id, char **av, int *index)
     core->load = load;
     if (my_strcmp(av[*index], "-n") == 0)
         return prog_nb(core, id, av, index);
-    return get_robot(core, av[*index], id);
+    return get_robot(core, av[*index], *id);
 }

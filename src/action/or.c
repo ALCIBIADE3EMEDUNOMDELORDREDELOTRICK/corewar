@@ -7,7 +7,7 @@
 
 #include "../../include/header.h"
 
-int my_or(corewar_t *war, robot_t *robot, processus_t *proc)
+int my_or(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
 {
     return SUCCESS_EXIT;
 }
