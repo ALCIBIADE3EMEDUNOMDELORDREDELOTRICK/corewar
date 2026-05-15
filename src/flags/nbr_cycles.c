@@ -7,7 +7,7 @@
 
 #include "../../include/header.h"
 
-int nbr_cycle(corewar_t *core, int ac, char **av, int *index)
+int nbr_cycle(corewar_t *core, int *id, char **av, int *index)
 {
     int cycle = av[*index + 1] ? my_getnbr(av[*index + 1]) : -1;
 
