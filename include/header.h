@@ -99,6 +99,7 @@ int reg_to_arena(corewar_t *war, processus_t *proc, int reg_idx, int addr);
 int live(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
 int do_action(corewar_t *war);
 int do_ld(corewar_t *war, robot_t *robot, processus_t *proc);
+int do_print(corewar_t *war, robot_t *robot, processus_t *proc);
 void free_robot(void *data);
 int die(corewar_t *war);
 int dump(corewar_t *war);
