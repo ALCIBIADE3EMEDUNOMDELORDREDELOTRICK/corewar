@@ -20,9 +20,9 @@ static int direct(processus_t *proc, corewar_t *war, int start_pc)
     proc->type[1] = 2;
     if (args2 - 1 > REG_NUMBER || args2 - 1 <= 0) {
         reinit(proc);
+        proc->pc = proc->new_pc;
         return SUCCESS_EXIT;
     }
-    proc->carry = (proc->reg[args2 - 1] == 0);
     proc->cycle = 5;
     return SUCCESS_EXIT;
 }
@@ -38,11 +38,11 @@ static int indirect(processus_t *proc, corewar_t *war, int start_pc)
     proc->todo[1] = args1;
     proc->todo[2] = args2;
     proc->type[1] = 3;
-    if (args2 - 1 > REG_NUMBER || args2 - 1 <= 0) {
+    if (args2 > REG_NUMBER || args2 < 1) {
         reinit(proc);
+        proc->pc = proc->new_pc;
         return SUCCESS_EXIT;
     }
-    proc->carry = (proc->reg[args2 - 1] == 0);
     proc->cycle = 5;
     return SUCCESS_EXIT;
 }
@@ -59,8 +59,8 @@ int my_ld(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
         return indirect(proc, war, start_pc);
     if (get_arg_type(coding, 0) == 1)
         proc->new_pc = (proc->new_pc + 1) % MEM_SIZE;
+    proc->pc = proc->new_pc;
     reinit(proc);
-    proc->pc = (proc->new_pc + 1) % MEM_SIZE;
     return SUCCESS_EXIT;
 }
 
@@ -70,7 +70,8 @@ int do_ld(corewar_t *war, robot_t *robot, processus_t *proc)
         proc->reg[proc->todo[2] - 1] = proc->todo[1];
     if (proc->type[1] == 3)
         proc->reg[proc->todo[2] - 1] = read_bytes_arena(war->arena,
-            (proc->pc + proc->todo[1]) % IDX_MOD, REG_SIZE);
+            proc->pc + proc->todo[1] % IDX_MOD, REG_SIZE);
+    proc->carry = (proc->reg[proc->todo[2] - 1] == 0);
     reinit(proc);
     proc->pc = proc->new_pc;
     return SUCCESS_EXIT;
