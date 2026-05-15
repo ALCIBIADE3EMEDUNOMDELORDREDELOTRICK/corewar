@@ -31,7 +31,7 @@ static int delete_processus(corewar_t *war, processus_t **begin)
 
     if (!*begin)
         return 1;
-    while (*begin && war->current_cycle -
+    while ((*begin) != NULL && war->current_cycle -
         (*begin)->since_last_live >= war->cycle_to_die) {
         if (war->current_cycle -
             (*begin)->since_last_live >= war->cycle_to_die) {
@@ -40,6 +40,8 @@ static int delete_processus(corewar_t *war, processus_t **begin)
             last = *begin;
         }
     }
+    if (!(*begin))
+        return 0;
     return check_all_processus(war, begin);
 }
 
