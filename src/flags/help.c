@@ -7,7 +7,7 @@
 
 #include "../../include/header.h"
 
-int print_help(corewar_t *core, int ac, char **av, int *index)
+int print_help(corewar_t *core, int *id, char **av, int *index)
 {
     if (len_array(av) > 2)
         return -1;

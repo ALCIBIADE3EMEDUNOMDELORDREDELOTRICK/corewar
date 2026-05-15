@@ -21,11 +21,13 @@ int check_flag_fct(corewar_t *core, int *id, char **av, int *index)
 
     for (int i = 0; flag[i].name; i++) {
         if (my_strcmp(av[*index], flag[i].name) == 0)
-            status = flag[i].fct(core, *id, av, index);
+            status = flag[i].fct(core, id, av, index);
         if (status == -1)
             return -1;
-        if (status == 0)
+        if (status == 0) {
+            *id = i != 3 ? (*id) + 1 : *id;
             return status;
+        }
     }
     if (get_robot(core, av[*index], *id) != SUCCESS_EXIT)
         return -1;
@@ -40,8 +42,6 @@ int check_flag(corewar_t *core, int ac, char **av)
 
     for (int i = 1; av[i]; i++) {
         status = check_flag_fct(core, &id, av, &i);
-        if (status == 1)
-            continue;
         if (status == -1)
             return -1;
     }
