@@ -44,7 +44,8 @@ static int get_indir(corewar_t *war, processus_t *proc, int *index)
     for (int i = 1; index[i] != -1; i++)
         if (index[i] == 3)
             return -1;
-    proc->todo[index[0]] = read_bytes_arena(war->arena, proc->pc + indir % IDX_MOD, IND_SIZE);
+    proc->todo[index[0]] = read_bytes_arena(war->arena,
+        proc->pc + indir % IDX_MOD, IND_SIZE);
     return SUCCESS_EXIT;
 }
 
