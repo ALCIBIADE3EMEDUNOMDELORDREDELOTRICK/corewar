@@ -7,41 +7,63 @@
 
 #include "../../include/header.h"
 
-int indirect(corewar_t *war, processus_t *proc, int start_pc, int reg)
+int regist(int reg, processus_t *proc, corewar_t *war)
 {
-    int value = read_bytes_arena(war->arena, proc->pc, IND_SIZE);
+    int reg2 = read_bytes_arena(war->arena, proc->new_pc, 1);
 
-    proc->pc = (proc->pc + IND_SIZE) % MEM_SIZE;
-    if (reg - 1 >= REG_NUMBER)
+    proc->new_pc = (proc->new_pc + 1) % MEM_SIZE;
+    if (reg2 < 1 || reg2 > REG_NUMBER || reg < 1 || reg > REG_NUMBER) {
+        reinit(proc);
+        proc->pc = proc->new_pc;
         return SUCCESS_EXIT;
+    }
+    proc->todo[1] = reg;
+    proc->todo[2] = reg2;
+    proc->type[1] = 1;
     proc->cycle = 5;
-    reg_to_arena(war, proc, reg, (start_pc + value) % IDX_MOD);
     return SUCCESS_EXIT;
 }
 
-int regist(corewar_t *war, processus_t *proc, int reg)
+int indirect(int reg, processus_t *proc, corewar_t *war)
 {
-    int reg2 = read_bytes_arena(war->arena, proc->pc, 1);
+    int agrs2 = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
-    proc->pc = (proc->pc + 1) % MEM_SIZE;
-    if (reg2 - 1 >= REG_NUMBER || reg - 1 >= REG_NUMBER)
-        return SUCCESS_EXIT;
+    proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
+    proc->todo[1] = reg;
+    proc->todo[2] = agrs2;
+    proc->type[1] = 3;
     proc->cycle = 5;
-    proc->reg[reg2 - 1] = proc->reg[reg - 1];
     return SUCCESS_EXIT;
 }
 
 int my_st(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
 {
-    int coding_byte = read_bytes_arena(war->arena, proc->pc, 1);
+    int coding_byte = read_bytes_arena(war->arena, proc->new_pc, 1);
     int reg = 0;
 
-    proc->pc = (proc->pc + 1) % MEM_SIZE;
-    reg = read_bytes_arena(war->arena, proc->pc, 1);
-    proc->pc = (proc->pc + 1) % MEM_SIZE;
+    proc->todo[0] = 3;
+    proc->new_pc = (proc->new_pc + 1) % MEM_SIZE;
+    reg = read_bytes_arena(war->arena, proc->new_pc, 1);
+    proc->new_pc = (proc->new_pc + 1) % MEM_SIZE;
     if (get_arg_type(coding_byte, 1) == 1)
-        return regist(war, proc, reg);
+        return regist(reg, proc, war);
     if (get_arg_type(coding_byte, 1) == 3)
-        return indirect(war, proc, start_pc, reg);
+        return indirect(reg, proc, war);
+    if (get_arg_type(coding_byte, 1) == 2)
+        proc->new_pc = (proc->new_pc + DIR_SIZE) % MEM_SIZE;
+    proc->pc = proc->new_pc;
+    reinit(proc);
+    return SUCCESS_EXIT;
+}
+
+int do_st(corewar_t *war, robot_t *robot, processus_t *proc)
+{
+    if (proc->type[1] == 1)
+        proc->reg[proc->todo[2] - 1] = proc->reg[proc->todo[1] - 1];
+    if (proc->type[1] == 3)
+        reg_to_arena(war, proc, proc->todo[1] - 1,
+            proc->pc + proc->todo[2] % IDX_MOD);
+    reinit(proc);
+    proc->pc = proc->new_pc;
     return SUCCESS_EXIT;
 }
