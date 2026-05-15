@@ -24,16 +24,17 @@ typedef enum {
 } exit_t;
 
 typedef struct processus {
+    bool life;
     int pc;
     int carry;
     int reg[REG_NUMBER];
     int id;
     int cycle;
+    int since_last_live;
     struct processus *next;
 } processus_t;
 
 typedef struct robot {
-    bool life;
     char *name;
     int id;
     int size;
@@ -47,49 +48,55 @@ typedef struct corewar {
     unsigned char arena[MEM_SIZE];
     int load;
     int cycle;
+    int cycles_since_check;
     int current_cycle;
+    int nbr_live;
     int cycle_to_die;
+    int check;
 } corewar_t;
 
-typedef int (*fct_t)(corewar_t *core, int ac, char **av, int *index);
+typedef int (*fct_t)(corewar_t *core, int *id, char **av, int *index);
 
 typedef struct flag_s {
     char *name;
     fct_t fct;
 } flag_t;
 
-int add(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_and(corewar_t *war, robot_t *robot, processus_t *proc);
+int add(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_and(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
 char *get_file(const char *filename);
-int zjmp(corewar_t *war, robot_t *robot, processus_t *proc);
-int sub(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_st(corewar_t *war, robot_t *robot, processus_t *proc);
-int sti(corewar_t *war, robot_t *robot, processus_t *proc);
-int print(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_or(corewar_t *war, robot_t *robot, processus_t *proc);
-int lldi(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_xor(corewar_t *war, robot_t *robot, processus_t *proc);
-int lld(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_ld(corewar_t *war, robot_t *robot, processus_t *proc);
-int lfork(corewar_t *war, robot_t *robot, processus_t *proc);
-int ldi(corewar_t *war, robot_t *robot, processus_t *proc);
-int my_fork(corewar_t *war, robot_t *robot, processus_t *proc);
+int zjmp(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int sub(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_st(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int sti(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int print(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_or(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int lldi(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_xor(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int lld(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_ld(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int lfork(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int ldi(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
+int my_fork(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
 robot_t *create_champion(corewar_t *core, char *filename, int id);
-int prog_nb(corewar_t *core, int ac, char **av, int *index);
-int print_help(corewar_t *core, int ac, char **av, int *index);
-int nbr_cycle(corewar_t *core, int ac, char **av, int *index);
+nodes_t *my_sort_id_r(nodes_t *head);
+int prog_nb(corewar_t *core, int *id, char **av, int *index);
+int print_help(corewar_t *core, int *id, char **av, int *index);
+int nbr_cycle(corewar_t *core, int *id, char **av, int *index);
+int get_arg_type(unsigned char cb, int arg_num);
+int read_bytes_arena(unsigned char arena[MEM_SIZE], int pc, int size);
 int init(corewar_t **war, char **av);
 int init_robot(corewar_t *war, char **av);
 int get_robot(corewar_t *war, char *path, int id);
 int free_all(corewar_t *war);
 int loop(corewar_t *war);
-int live(corewar_t *war, robot_t *robot, processus_t *proc);
+int live(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc);
 int do_action(corewar_t *war);
 void free_robot(void *data);
 int die(corewar_t *war);
 int dump(corewar_t *war);
 int print_win(corewar_t *war);
-int prog_a(corewar_t *core, int id, char **av, int *index);
+int prog_a(corewar_t *core, int *id, char **av, int *index);
 int check_flag(corewar_t *core, int ac, char **av);
 int parsing(robot_t *robot, char *av);
 #endif
