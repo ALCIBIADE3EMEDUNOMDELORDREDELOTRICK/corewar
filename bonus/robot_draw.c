@@ -27,9 +27,6 @@ void draw_card_info(sfRenderWindow *win, sfFont *font,
     draw_text(win, text, buf, y + 30);
     snprintf(buf, sizeof(buf), "Processus  %d", count_processes(r));
     draw_text(win, text, buf, y + 55);
-    sfText_setFillColor(text, r->life ?
-        (sfColor){29, 158, 117, 255} : (sfColor){226, 75, 74, 255});
-    snprintf(buf, sizeof(buf), "Live       %s", r->life ? "alive" : "dead");
     draw_text(win, text, buf, y + 80);
     sfText_destroy(text);
 }
@@ -81,8 +78,6 @@ void draw_robot_detail(sfRenderWindow *win, sfFont *font,
     float y = 0;
     int pidx = 0;
 
-    snprintf(buf, sizeof(buf), "%s  [%s]",
-        r->name, r->life ? "alive" : "dead");
     draw_text(win, header, buf, y + 6);
     sfText_destroy(header);
     draw_line(win, 40);

@@ -84,7 +84,6 @@ void draw_arena(sfRenderWindow *win, corewar_t *war)
     sfRenderWindow_drawPrimitives(win, verts, MEM_SIZE * 4, sfQuads, NULL);
     for (nodes_t *n = war->robot; n; n = n->next) {
         r = (robot_t *)n->data;
-        if (r->life)
-            draw_pc(win, r->processus);
+        draw_pc(win, r->processus);
     }
 }
