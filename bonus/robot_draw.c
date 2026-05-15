@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** corewar_pub
 ** File description:
-** dump
+** robot draw
 */
 
 #include "../include/header.h"
@@ -47,14 +47,69 @@ static void draw_slot(sfRenderWindow *win, sfFont *font,
     draw_line(win, y + 160);
 }
 
-void draw_robots(sfRenderWindow *win, sfFont *font, corewar_t *war)
+static void draw_process_regs(sfRenderWindow *win, sfFont *font,
+    processus_t *p, sfVector2f *data)
+{
+    char buf[128];
+    sfText *text = create_text(font, &(sfColor){180, 180, 180, 255});
+    int row = 0;
+
+    snprintf(buf, sizeof(buf), "Process %d   PC:%08X  carry:%d",
+        (int)data->y, p->pc, p->carry);
+    sfText_setFillColor(text, (sfColor){220, 220, 100, 255});
+    draw_text(win, text, buf, data->x);
+    sfText_setFillColor(text, (sfColor){180, 180, 180, 255});
+    for (; row < 4; row++) {
+        snprintf(buf, sizeof(buf),
+            "r%-2d:%08X  r%-2d:%08X  r%-2d:%08X  r%-2d:%08X",
+            row * 4 + 1, p->reg[row * 4], row * 4 + 2, p->reg[row * 4 + 1], row
+            * 4 + 3, p->reg[row * 4 + 2], row * 4 + 4, p->reg[row * 4 + 3]);
+        draw_text(win, text, buf, data->x + 22 + row * 20);
+    }
+    snprintf(buf, sizeof(buf), "r%-2d:%08X", 16, p->reg[15]);
+    draw_text(win, text, buf, data->x + 22 + row * 20);
+    sfText_destroy(text);
+    draw_line(win, data->x + 130);
+}
+
+void draw_robot_detail(sfRenderWindow *win, sfFont *font,
+    robot_t *r, int idx)
+{
+    const sfColor *color = get_color(idx);
+    sfText *header = create_text(font, color);
+    char buf[128];
+    float y = 0;
+    int pidx = 0;
+
+    snprintf(buf, sizeof(buf), "%s  [%s]",
+        r->name, r->life ? "alive" : "dead");
+    draw_text(win, header, buf, y + 6);
+    sfText_destroy(header);
+    draw_line(win, 40);
+    y = 46;
+    for (processus_t *p = r->processus; p && y + 110 <= 980; p = p->next) {
+        pidx++;
+        draw_process_regs(win, font, p, &(sfVector2f){y, pidx});
+        y += 120;
+    }
+}
+
+void draw_robots(sfRenderWindow *win, sfFont *font, corewar_t *war,
+    int selected)
 {
     int idx = 0;
+    robot_t *target = NULL;
 
     for (nodes_t *n = war->robot; n; n = n->next) {
-        if (idx >= 6)
-            return;
-        draw_slot(win, font, (robot_t *)n->data, idx);
+        if (idx == selected)
+            target = (robot_t *)n->data;
+        if (selected < 0 && idx < 6)
+            draw_slot(win, font, (robot_t *)n->data, idx);
         idx++;
+    }
+    if (selected >= 0 && target)
+        draw_robot_detail(win, font, target, selected);
+    else if (selected < 0) {
+        return;
     }
 }
