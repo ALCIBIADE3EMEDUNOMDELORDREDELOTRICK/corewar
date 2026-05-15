@@ -37,6 +37,8 @@ SRC =	src/main.c						\
 		src/action/sti.c				\
 		src/action/sub.c				\
 		src/action/zjmp.c				\
+		src/action/tools.c				\
+		src/robots/sort.c				\
 
 OBJ = 	$(SRC:.c=.o)
 
