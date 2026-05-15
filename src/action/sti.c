@@ -6,14 +6,6 @@
 */
 
 #include "../../include/header.h"
-/*
-** EPITECH PROJECT, 2026
-** corewar_pub
-** File description:
-** sti
-*/
-
-#include "../../include/header.h"
 
 static int get_value(corewar_t *war, processus_t *proc, int type)
 {
