@@ -84,6 +84,7 @@ processus_t *create_processus(int id)
     process->carry = 0;
     process->pc = 0;
     process->life = false;
+    reinit(process);
     process->next = NULL;
     for (int i = 0; i != REG_NUMBER; i++)
         process->reg[i] = 0;
