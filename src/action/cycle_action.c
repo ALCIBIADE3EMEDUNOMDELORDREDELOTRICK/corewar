@@ -30,7 +30,7 @@ int do_command(processus_t *proc, corewar_t *war, robot_t *robot)
     int action[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
     int (*func[])(corewar_t *, robot_t *, processus_t *) =
     {do_live, do_ld, do_st, do_add, do_sub, do_and, do_or, do_xor, do_zjmp,
-        do_ldi, NULL, do_fork, do_lld, do_lldi, do_lfork, do_print};
+        do_ldi, do_sti, do_fork, do_lld, do_lldi, do_lfork, do_print};
 
     for (int i = 0; i != 16; i++) {
         if (action[i] == proc->todo[0]) {

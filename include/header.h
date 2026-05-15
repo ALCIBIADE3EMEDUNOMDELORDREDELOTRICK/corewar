@@ -104,6 +104,7 @@ int do_st(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_action(corewar_t *war);
 int do_ld(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_print(corewar_t *war, robot_t *robot, processus_t *proc);
+int do_sti(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_lfork(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_fork(corewar_t *war, robot_t *robot, processus_t *proc);
 void free_robot(void *data);
