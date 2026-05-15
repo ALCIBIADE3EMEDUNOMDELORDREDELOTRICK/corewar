@@ -59,6 +59,7 @@ void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
             handle_events(win, event, &selected);
         draw_robots(win, font, war, selected);
         draw_cycle(win, font, war);
+        draw_arena(win, war);
         sfRenderWindow_display(win);
     }
     sfFont_destroy(font);
