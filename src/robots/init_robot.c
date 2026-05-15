@@ -80,8 +80,11 @@ processus_t *create_processus(int id)
 
     if (!process)
         return NULL;
+    process->cycle = 0;
     process->carry = 0;
     process->pc = 0;
+    process->life = false;
+    reinit(process);
     process->next = NULL;
     for (int i = 0; i != REG_NUMBER; i++)
         process->reg[i] = 0;
@@ -94,7 +97,6 @@ static int get_action(corewar_t *war, int fd, robot_t *robot, int id)
 {
     processus_t *proc = NULL;
 
-    robot->cycle = 0;
     robot->code = malloc(sizeof(unsigned char) * robot->size);
     if (!robot->code)
         return FAILURE;
@@ -120,7 +122,6 @@ void *push_robot(corewar_t *war, char *path, int id, int fd)
         return NULL;
     robot->size = 0;
     robot->id = id;
-    robot->life = true;
     robot->load = -1;
     robot->name = NULL;
     robot->code = NULL;

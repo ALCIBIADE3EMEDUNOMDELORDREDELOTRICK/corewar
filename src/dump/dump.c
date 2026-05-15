@@ -19,7 +19,7 @@ int print_reg(robot_t *robot, processus_t *reg)
             my_printf("\n");
     }
     my_printf("\n");
-    my_printf("    PC : %08x    carry: %d", reg->pc, reg->carry);
+    my_printf("    PC : %08X    carry: %d", reg->pc, reg->carry);
     my_printf("\n");
     return SUCCESS_EXIT;
 }

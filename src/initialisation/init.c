@@ -19,5 +19,7 @@ int init(corewar_t **war, char **av)
     (*war)->load = -1;
     (*war)->cycle_to_die = CYCLE_TO_DIE;
     (*war)->current_cycle = 0;
+    (*war)->nbr_live = 0;
+    (*war)->check = 0;
     return SUCCESS_EXIT;
 }
