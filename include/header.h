@@ -112,6 +112,7 @@ int dump(corewar_t *war);
 int do_and(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_or(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_xor(corewar_t *war, robot_t *robot, processus_t *proc);
+int do_lldi(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_zjmp(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_ldi(corewar_t *war, robot_t *robot, processus_t *proc);
 int do_lld(corewar_t *war, robot_t *robot, processus_t *proc);
