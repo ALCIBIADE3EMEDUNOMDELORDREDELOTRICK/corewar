@@ -8,10 +8,27 @@
 #include "../include/header.h"
 #include "../bonus/bonus.h"
 
-void handle_events(sfRenderWindow *win, sfEvent event)
+static void handle_key(sfKeyCode key, int *selected)
 {
-    if (event.type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape))
+    sfKeyCode num_keys[] = {sfKeyNum1, sfKeyNum2, sfKeyNum3,
+        sfKeyNum4, sfKeyNum5, sfKeyNum6};
+
+    for (int i = 0; i < 6; i++) {
+        if (key == num_keys[i]) {
+            *selected = (*selected == i) ? -1 : i;
+            return;
+        }
+    }
+}
+
+void handle_events(sfRenderWindow *win, sfEvent event, int *selected)
+{
+    if (event.type == sfEvtClosed || sfKeyboard_isKeyPressed(sfKeyEscape)) {
         sfRenderWindow_close(win);
+        return;
+    }
+    if (event.type == sfEvtKeyPressed)
+        handle_key(event.key.code, selected);
 }
 
 const sfColor *get_color(int i)
@@ -34,12 +51,13 @@ const sfColor *get_color(int i)
 void run_window(sfRenderWindow *win, sfEvent event, corewar_t *war)
 {
     sfFont *font = sfFont_createFromFile("bonus/font.ttf");
+    int selected = -1;
 
     while (sfRenderWindow_isOpen(win)) {
         sfRenderWindow_clear(win, sfBlack);
         while (sfRenderWindow_pollEvent(win, &event))
-            handle_events(win, event);
-        draw_robots(win, font, war);
+            handle_events(win, event, &selected);
+        draw_robots(win, font, war, selected);
         draw_cycle(win, font, war);
         sfRenderWindow_display(win);
     }
