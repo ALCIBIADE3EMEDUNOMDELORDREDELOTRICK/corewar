@@ -31,11 +31,11 @@ static int get_dir(corewar_t *war, processus_t *proc, int index, bool *error)
 
 static int get_indir(corewar_t *war, processus_t *proc, int index, bool *error)
 {
-    int indir = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
+    int indir = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
     proc->todo[index] = read_bytes_arena
-        (war->arena, proc->pc + indir % IDX_MOD, IND_SIZE);
+        (war->arena, proc->pc + indir % IDX_MOD, REG_SIZE);
     return SUCCESS_EXIT;
 }
 
@@ -87,7 +87,7 @@ int my_xor(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
 
     proc->new_pc = (proc->new_pc + 1) % MEM_SIZE;
     proc->cycle = 8;
-    proc->todo[0] = 6;
+    proc->todo[0] = 8;
     take_argument(war, proc, coding_code, &test);
     tests_reg(war, proc, coding_code, &test);
     if (test == true) {

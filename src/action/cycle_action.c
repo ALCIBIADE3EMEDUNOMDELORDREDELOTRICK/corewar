@@ -41,24 +41,47 @@ int do_command(processus_t *proc, corewar_t *war, robot_t *robot)
     return SUCCESS_EXIT;
 }
 
-int choose_action(corewar_t *war, robot_t *robot)
+static int process_action(corewar_t *war, robot_t *robot, processus_t *proc)
 {
     int status = 0;
 
-    for (processus_t *tmp = robot->processus; tmp; tmp = tmp->next) {
-        if (tmp->cycle > 0)
-            tmp->cycle--;
-        if (tmp->cycle == 0) {
-            status = do_command(tmp, war, robot);
-            detect_command(tmp, war, robot, status);
+    if (proc->cycle > 0)
+        proc->cycle--;
+    if (proc->cycle == 0) {
+        status = do_command(proc, war, robot);
+        detect_command(proc, war, robot, status);
+    }
+    return status == ALTERNATE;
+}
+
+static processus_t *get_processus_at(robot_t *robot, int index)
+{
+    processus_t *proc = robot->processus;
+
+    for (int i = 0; proc && i < index; i++)
+        proc = proc->next;
+    return proc;
+}
+
+static int process_rank(corewar_t *war, int rank, int *executed)
+{
+    processus_t *proc = NULL;
+    int found = 0;
+
+    for (nodes_t *tmp = war->robot; tmp; tmp = tmp->next) {
+        proc = get_processus_at(tmp->data, rank);
+        if (proc) {
+            *executed += process_action(war, tmp->data, proc);
+            found = 1;
         }
     }
-    return SUCCESS_EXIT;
+    return found;
 }
 
 int do_action(corewar_t *war)
 {
-    for (nodes_t *tmp = war->robot; tmp; tmp = tmp->next)
-        choose_action(war, tmp->data);
-    return SUCCESS_EXIT;
+    int executed = 0;
+
+    for (int rank = 0; process_rank(war, rank, &executed); rank++);
+    return executed;
 }

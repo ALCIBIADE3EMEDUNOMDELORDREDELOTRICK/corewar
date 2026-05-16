@@ -42,6 +42,7 @@ typedef struct robot {
     int id;
     int size;
     unsigned char *code;
+    int since_last_live;
     int load;
     processus_t *processus;
 } robot_t;
@@ -92,6 +93,7 @@ int do_live(corewar_t *war, robot_t *robot, processus_t *proc);
 int init(corewar_t **war, char **av);
 processus_t *create_processus(int id);
 void reinit(processus_t *proc);
+void append_processus(processus_t **begin, processus_t *new);
 int init_robot(corewar_t *war, char **av);
 int get_robot(corewar_t *war, char *path, int id);
 int do_add(corewar_t *war, robot_t *robot, processus_t *proc);

@@ -51,7 +51,7 @@ int sub(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
     if (tests == true) {
         proc->cycle = 0;
         reinit(proc);
-        proc->pc = proc->new_pc;
+        proc->pc = start_pc;
     }
     return SUCCESS_EXIT;
 }
@@ -60,7 +60,6 @@ int do_sub(corewar_t *war, robot_t *robot, processus_t *proc)
 {
     proc->reg[proc->todo[3] - 1] = proc->reg[proc->todo[1] - 1]
         - proc->reg[proc->todo[2] - 1];
-    proc->carry = (proc->reg[proc->todo[3] - 1] == 0);
     reinit(proc);
     proc->pc = proc->new_pc;
     return SUCCESS_EXIT;

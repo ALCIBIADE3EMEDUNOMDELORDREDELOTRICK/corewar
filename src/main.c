@@ -11,20 +11,19 @@ int placement_in_arena(corewar_t *war)
 {
     int len = len_node(war->robot);
     int load_address = 0;
-    int tmp_adress = 0;
+    int index = 0;
 
     if (len == 0)
         return FAILURE_EXIT;
     for (nodes_t *tmp = war->robot; tmp; tmp = tmp->next) {
-        tmp_adress = load_address;
+        load_address = index * MEM_SIZE / len;
         load_address = ((robot_t *)tmp->data)->load != -1 ?
             ((robot_t *)tmp->data)->load : load_address;
         for (int i = 0; i < ((robot_t *)tmp->data)->size; i++)
             war->arena[(load_address + i) % MEM_SIZE]
         = ((robot_t *)tmp->data)->code[i];
         ((robot_t *)tmp->data)->processus->pc = load_address;
-        load_address = tmp_adress;
-        load_address += MEM_SIZE / len;
+        index++;
     }
     return SUCCESS_EXIT;
 }

@@ -26,7 +26,7 @@ int regist(int reg, processus_t *proc, corewar_t *war)
 
 int indirect(int reg, processus_t *proc, corewar_t *war)
 {
-    int agrs2 = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
+    int agrs2 = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
     proc->todo[1] = reg;

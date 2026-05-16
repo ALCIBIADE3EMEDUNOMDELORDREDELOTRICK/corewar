@@ -26,7 +26,7 @@ static int get_reg(corewar_t *war, processus_t *proc, int *index)
 
 static int get_dir(corewar_t *war, processus_t *proc, int *index)
 {
-    int dir = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
+    int dir = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
     for (int i = 1; index[i] != -1; i++)
@@ -38,13 +38,13 @@ static int get_dir(corewar_t *war, processus_t *proc, int *index)
 
 static int get_indir(corewar_t *war, processus_t *proc, int *index)
 {
-    int indir = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
+    int indir = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
     for (int i = 1; index[i] != -1; i++)
         if (index[i] == 3)
             return -1;
-    proc->todo[index[0]] = read_bytes_arena(war->arena,
+    proc->todo[index[0]] = (int16_t)read_bytes_arena(war->arena,
         proc->pc + indir % IDX_MOD, IND_SIZE);
     return SUCCESS_EXIT;
 }

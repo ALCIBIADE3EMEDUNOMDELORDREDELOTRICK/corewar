@@ -24,14 +24,41 @@ int print_reg(robot_t *robot, processus_t *reg)
     return SUCCESS_EXIT;
 }
 
+static processus_t *get_processus_at(robot_t *robot, int index)
+{
+    processus_t *proc = robot->processus;
+
+    for (int i = 0; proc && i < index; i++)
+        proc = proc->next;
+    return proc;
+}
+
+static int dump_rank(corewar_t *war, int rank)
+{
+    processus_t *proc = NULL;
+    int found = 0;
+
+    for (nodes_t *tmp = war->robot; tmp; tmp = tmp->next) {
+        proc = get_processus_at(tmp->data, rank);
+        if (proc) {
+            print_reg(tmp->data, proc);
+            found = 1;
+        }
+    }
+    return found;
+}
+
 int dump_robot(corewar_t *war)
 {
-    my_printf("Cycle: %d\n", war->cycle);
+    int cycle = war->cycle;
+
+    if (war->current_cycle < war->cycle)
+        cycle = war->current_cycle;
+    if (cycle == 0 && war->cycle > 0)
+        cycle = 1;
+    my_printf("Cycle: %d\n", cycle);
     my_printf("Registers:\n");
-    for (nodes_t *tmp = war->robot; tmp; tmp = tmp->next)
-        for (processus_t *reg =
-                ((robot_t *)tmp->data)->processus; reg; reg = reg->next)
-            print_reg(tmp->data, reg);
+    for (int rank = 0; dump_rank(war, rank); rank++);
     my_printf("\n");
     return SUCCESS_EXIT;
 }
@@ -46,9 +73,11 @@ int dump(corewar_t *war)
         "-- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
     my_printf("%08X: ", 0);
     for (int i = 0; i < MEM_SIZE; i++) {
-        my_printf("%02X ", war->arena[i]);
+        my_printf("%02X", war->arena[i]);
         if (i + 1 == MEM_SIZE)
             my_printf("\n");
+        if ((i + 1) % 32 != 0)
+            my_printf(" ");
         if (i != 0 && (i + 1) % 32 == 0 && i + 1 != MEM_SIZE)
             my_printf("\n%08X: ", i + 1);
     }

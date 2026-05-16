@@ -31,11 +31,11 @@ static int get_dir(corewar_t *war, processus_t *proc, int index, bool *error)
 
 static int get_indir(corewar_t *war, processus_t *proc, int index, bool *error)
 {
-    int indir = read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
+    int indir = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
     proc->todo[index] = read_bytes_arena
-        (war->arena, proc->pc + indir % IDX_MOD, IND_SIZE);
+        (war->arena, proc->pc + indir % IDX_MOD, REG_SIZE);
     return SUCCESS_EXIT;
 }
 

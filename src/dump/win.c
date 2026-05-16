@@ -9,7 +9,7 @@
 
 int print_win(corewar_t *war)
 {
-    if (len_node(war->robot) == 0) {
+    if (len_node(war->robot) == 0 || war->cycle_to_die <= 0) {
         my_printf("No player has won.\n");
         return 0;
     }

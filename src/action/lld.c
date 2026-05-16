@@ -18,7 +18,7 @@ static int direct(processus_t *proc, corewar_t *war, int start_pc)
     proc->todo[1] = args1;
     proc->todo[2] = args2;
     proc->type[1] = 2;
-    if (args2 - 1 > REG_NUMBER || args2 - 1 <= 0) {
+    if (args2 > REG_NUMBER || args2 < 1) {
         reinit(proc);
         proc->pc = proc->new_pc;
         return SUCCESS_EXIT;
@@ -29,7 +29,7 @@ static int direct(processus_t *proc, corewar_t *war, int start_pc)
 
 static int indirect(processus_t *proc, corewar_t *war, int start_pc)
 {
-    int args1 = read_bytes_arena(war->arena, proc->new_pc, 2);
+    int args1 = (int16_t)read_bytes_arena(war->arena, proc->new_pc, 2);
     int args2 = 0;
 
     proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
@@ -70,7 +70,7 @@ int do_lld(corewar_t *war, robot_t *robot, processus_t *proc)
         proc->reg[proc->todo[2] - 1] = proc->todo[1];
     if (proc->type[1] == 3)
         proc->reg[proc->todo[2] - 1] = read_bytes_arena(war->arena,
-            proc->pc + proc->todo[1], IND_SIZE);
+            proc->pc + proc->todo[1], REG_SIZE);
     proc->carry = (proc->reg[proc->todo[2] - 1] == 0);
     reinit(proc);
     proc->pc = proc->new_pc;

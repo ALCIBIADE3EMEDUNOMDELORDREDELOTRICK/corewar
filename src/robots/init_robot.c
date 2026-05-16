@@ -84,6 +84,8 @@ processus_t *create_processus(int id)
     process->carry = 0;
     process->pc = 0;
     process->life = false;
+    process->since_last_live = 0;
+    process->new_pc = 0;
     reinit(process);
     process->next = NULL;
     for (int i = 0; i != REG_NUMBER; i++)
@@ -124,6 +126,7 @@ void *push_robot(corewar_t *war, char *path, int id, int fd)
     robot->id = id;
     robot->load = -1;
     robot->name = NULL;
+    robot->since_last_live = 0;
     robot->code = NULL;
     robot->processus = NULL;
     if (get_header(fd, robot) != SUCCESS_EXIT) {

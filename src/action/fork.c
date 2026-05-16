@@ -7,27 +7,36 @@
 
 #include "../../include/header.h"
 
-int my_fork(corewar_t *war, robot_t *robot, processus_t *proc, int start_pc)
+int my_fork(corewar_t *war, robot_t *robot,
+    processus_t *proc, int start_pc)
 {
-    int args = read_bytes_arena(war->arena, proc->new_pc, 2);
+    int offset = 0;
 
-    proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
-    proc->todo[1] = args;
+    offset = (int16_t)read_bytes_arena(war->arena, proc->new_pc, IND_SIZE);
     proc->todo[0] = 12;
-    proc->cycle = 799;
+    proc->todo[1] = offset;
+    proc->new_pc = (proc->new_pc + IND_SIZE) % MEM_SIZE;
+    proc->cycle = 800;
     return SUCCESS_EXIT;
 }
 
 int do_fork(corewar_t *war, robot_t *robot, processus_t *proc)
 {
-    processus_t *new = create_processus(robot->id);
+    processus_t *new = NULL;
 
+    new = create_processus(robot->id);
     if (!new)
         return FAILURE;
     new->carry = proc->carry;
-    new->pc = (proc->pc + (proc->todo[1] % IDX_MOD) + MEM_SIZE) % MEM_SIZE;
-    new->next = robot->processus;
-    robot->processus = new;
+    new->life = proc->life;
+    new->since_last_live = war->current_cycle;
+    for (int i = 0; i < REG_NUMBER; i++)
+        new->reg[i] = proc->reg[i];
+    new->pc = (proc->pc +
+        (proc->todo[1] % IDX_MOD) +
+        MEM_SIZE) % MEM_SIZE;
+    new->new_pc = new->pc;
+    append_processus(&robot->processus, new);
     proc->pc = proc->new_pc;
     reinit(proc);
     return SUCCESS_EXIT;
